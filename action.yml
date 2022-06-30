@@ -1,11 +1,16 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'VTEX Toolbelt Login'
+description: 'Perform login using VTEX Toolbelt with supplied credentials'
+author: VTEX
 inputs:
-  milliseconds: # change this
+  account:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'Account to perform login on'
+  app-key:
+    required: true
+    description: 'APP Key used in authentication'
+  app-token:
+    required: true
+    description: 'APP Token used in authentication'
 runs:
   using: 'node16'
   main: 'dist/index.js'
