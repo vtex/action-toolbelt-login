@@ -21,4 +21,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          milliseconds: 1000
+          account: vtexgame1
+          app-key: ${{ secrets.APP_KEY }}
+          app-token: ${{ secrets.APP_TOKEN }}
