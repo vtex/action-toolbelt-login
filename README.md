@@ -1,105 +1,60 @@
 <p align="center">
-  <a href="https://github.com/actions/typescript-action/actions"><img alt="typescript-action status" src="https://github.com/actions/typescript-action/workflows/build-test/badge.svg"></a>
+  <a href="https://github.com/vtex/action-toolbelt-login/actions"><img alt="action-toolbelt-login status" src="https://github.com/vtex/action-toolbelt-login/workflows/build-test/badge.svg"></a>
 </p>
 
-# Create a JavaScript Action using TypeScript
+# Action Toolbelt Login
 
-Use this template to bootstrap the creation of a TypeScript action.:rocket:
+GitHub Action to perform login using VTEX Toolbelt with supplied credentials. 
+This action is handy for authenticating within a workflow, using App Key/Token, 
+and use the [VTEX Toolbelt].
 
-This template includes compilation support, tests, a validation workflow, publishing, and versioning guidance.  
+## How to use
 
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
+First of all, you must create an App Key and Token to use for a specific 
+account. You can follow this guide for [generating App Keys in your account], 
+and set them up as secrets for your repository. Then we can proceed.
 
-## Create an action from this template
+1. Create a folder, if it doesn't already exists, called `.github/workflows` in 
+   the root of your repo.
 
-Click the `Use this Template` and provide the new repo details for your action
+2. Create a workflow file inside that folder, as an example we will use 
+   `link-app.yml`
 
-## Code in Main
+3. Fill the workflow file using the following content:
 
-> First, you'll need to have a reasonably modern version of `node` handy. This won't work with versions older than 9, for instance.
+   ```yaml
+name: "Link IO App"
+on:
+  push:
+    branches:
+    - main
+    - master
 
-Install the dependencies  
-```bash
-$ npm install
-```
+jobs:
+  link:
+    runs-on: ubuntu-latest
 
-Build the typescript and package it for distribution
-```bash
-$ npm run build && npm run package
-```
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - name: Install toolbelt
+      run: |
+        yarn global add vtex
+        echo "$(yarn global bin)" >> $GITHUB_PATH
+    - uses: vtex/action-toolbelt-login@v1
+      with:
+        account: MY_ACCOUNT
+        app-key: ${{ secrets.APP_KEY }}
+        app-token: ${{ secrets.APP_TOKEN }}
+    - run: |
+        echo "yes" | vtex use my-workspace
+        vtex link --no-watch
+   ```
 
-Run the tests :heavy_check_mark:  
-```bash
-$ npm test
+The toolbelt commands on the last step of the `link` job will automatically use 
+the login token created by the `vtex/action-toolbelt-login` action.
 
- PASS  ./index.test.js
-  ✓ throws invalid number (3ms)
-  ✓ wait 500 ms (504ms)
-  ✓ test runs (95ms)
-
-...
-```
-
-## Change action.yml
-
-The action.yml defines the inputs and output for your action.
-
-Update the action.yml with your name, description, inputs and outputs for your action.
-
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
-
-```javascript
-import * as core from '@actions/core';
-...
-
-async function run() {
-  try { 
-      ...
-  } 
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run()
-```
-
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
-
-## Publish to a distribution branch
-
-Actions are run from GitHub repos so we will checkin the packed dist folder. 
-
-Then run [ncc](https://github.com/zeit/ncc) and push the results:
-```bash
-$ npm run package
-$ git add dist
-$ git commit -a -m "prod dependencies"
-$ git push origin releases/v1
-```
-
-Note: We recommend using the `--license` option for ncc, which will create a license file for all of the production node modules used in your project.
-
-Your action is now published! :rocket: 
-
-See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-
-## Validate
-
-You can now validate the action by referencing `./` in a workflow in your repo (see [test.yml](.github/workflows/test.yml))
-
-```yaml
-uses: ./
-with:
-  milliseconds: 1000
-```
-
-See the [actions tab](https://github.com/actions/typescript-action/actions) for runs of this action! :rocket:
-
-## Usage:
-
-After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference the stable and latest V1 action
+[VTEX Toolbelt]: https://github.com/vtex/toolbelt
+[generating App Keys in your account]: https://help.vtex.com/tutorial/application-keys--2iffYzlvvz4BDMr6WGUtet#generating-app-keys-in-your-account
