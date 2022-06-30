@@ -22,7 +22,7 @@ and set them up as secrets for your repository. Then we can proceed.
 
 3. Fill the workflow file using the following content:
 
-   ```yaml
+```yaml
 name: "Link IO App"
 on:
   push:
@@ -51,7 +51,7 @@ jobs:
     - run: |
         echo "yes" | vtex use my-workspace
         vtex link --no-watch
-   ```
+```
 
 The toolbelt commands on the last step of the `link` job will automatically use 
 the login token created by the `vtex/action-toolbelt-login` action.
