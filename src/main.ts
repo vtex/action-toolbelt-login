@@ -1,16 +1,19 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import {createSession} from './create-session'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
+    const account: string = core.getInput('account')
+    const appKey = core.getInput('app-key')
+    const appToken = core.getInput('app-token')
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    const token = await createSession({
+      appkey: appKey,
+      apptoken: appToken,
+      account
+    })
 
-    core.setOutput('time', new Date().toTimeString())
+    core.setOutput('token', token)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
