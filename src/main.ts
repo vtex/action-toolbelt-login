@@ -4,9 +4,9 @@ import { createSession, getAuthToken } from './create-session.js'
 
 async function run(): Promise<void> {
   try {
-    const account: string = core.getInput('account')
-    const appKey = core.getInput('app-key')
-    const appToken = core.getInput('app-token')
+    const account = core.getInput('account', { required: true })
+    const appKey = core.getInput('app-key', { required: true })
+    const appToken = core.getInput('app-token', { required: true })
 
     const token = await getAuthToken({
       appkey: appKey,
