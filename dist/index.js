@@ -2928,9 +2928,9 @@ const createSession = async (token, account) => {
 
 async function run() {
     try {
-        const account = core.getInput('account');
-        const appKey = core.getInput('app-key');
-        const appToken = core.getInput('app-token');
+        const account = core.getInput('account', { required: true });
+        const appKey = core.getInput('app-key', { required: true });
+        const appToken = core.getInput('app-token', { required: true });
         const token = await getAuthToken({
             appkey: appKey,
             apptoken: appToken,
