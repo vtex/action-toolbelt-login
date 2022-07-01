@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
-import {createSession, getAuthToken} from './create-session'
+
+import {createSession, getAuthToken} from './create-session.js'
 
 async function run(): Promise<void> {
   try {
