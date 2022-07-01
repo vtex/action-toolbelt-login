@@ -2885,32 +2885,32 @@ var io = __nccwpck_require__(436);
 
 
 
-const getAuthToken = async ({ appkey, apptoken, account }) => {
+const getAuthToken = async ({ appkey, apptoken, account, }) => {
     const payload = {
         appkey,
-        apptoken
+        apptoken,
     };
-    const fetch = await __nccwpck_require__.e(/* import() */ 841).then(__nccwpck_require__.bind(__nccwpck_require__, 841)).then(mod => mod.default);
+    const fetch = await __nccwpck_require__.e(/* import() */ 841).then(__nccwpck_require__.bind(__nccwpck_require__, 841)).then((mod) => mod.default);
     const res = await fetch(`http://api.vtexcommercestable.com.br/api/vtexid/apptoken/login?an=${encodeURIComponent(account)}`, {
         method: 'POST',
         body: JSON.stringify(payload),
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
     });
     const result = (await res.json());
     return result.token;
 };
 const createSession = async (token, account) => {
     const tokens = {
-        [account]: token
+        [account]: token,
     };
     const session = {
         account,
         login: 'login-bot@vtex.com.br',
-        token
+        token,
     };
     const workspace = {
         currentWorkspace: 'master',
-        lastWorkspace: null
+        lastWorkspace: null,
     };
     const sessionDirectory = external_path_.join((0,external_os_.homedir)(), '.vtex', 'session');
     if (!(0,external_fs_.existsSync)(sessionDirectory)) {
@@ -2919,7 +2919,7 @@ const createSession = async (token, account) => {
     await Promise.all([
         promises_namespaceObject.writeFile(external_path_.join(sessionDirectory, 'tokens.json'), JSON.stringify(tokens)),
         promises_namespaceObject.writeFile(external_path_.join(sessionDirectory, 'session.json'), JSON.stringify(session)),
-        promises_namespaceObject.writeFile(external_path_.join(sessionDirectory, 'workspace.json'), JSON.stringify(workspace))
+        promises_namespaceObject.writeFile(external_path_.join(sessionDirectory, 'workspace.json'), JSON.stringify(workspace)),
     ]);
 };
 
@@ -2934,7 +2934,7 @@ async function run() {
         const token = await getAuthToken({
             appkey: appKey,
             apptoken: appToken,
-            account
+            account,
         });
         await createSession(token, account);
         core.setOutput('token', token);

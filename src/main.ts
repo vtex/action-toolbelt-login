@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
 
-import {createSession, getAuthToken} from './create-session.js'
+import { createSession, getAuthToken } from './create-session.js'
 
 async function run(): Promise<void> {
   try {
@@ -11,7 +11,7 @@ async function run(): Promise<void> {
     const token = await getAuthToken({
       appkey: appKey,
       apptoken: appToken,
-      account
+      account,
     })
 
     await createSession(token, account)
