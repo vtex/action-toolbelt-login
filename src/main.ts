@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import {createSession} from './create-session'
+import {createSession, getAuthToken} from './create-session'
 
 async function run(): Promise<void> {
   try {
@@ -7,11 +7,13 @@ async function run(): Promise<void> {
     const appKey = core.getInput('app-key')
     const appToken = core.getInput('app-token')
 
-    const token = await createSession({
+    const token = await getAuthToken({
       appkey: appKey,
       apptoken: appToken,
       account
     })
+
+    await createSession(token, account)
 
     core.setOutput('token', token)
   } catch (error) {

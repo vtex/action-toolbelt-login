@@ -5,5 +5,6 @@ module.exports = {
   transform: {
     '^.+\\.ts$': 'ts-jest'
   },
-  verbose: true
+  extensionsToTreatAsEsm: ['.ts'],
+  verbose: true,
 }

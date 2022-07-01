@@ -1,18 +1,35 @@
-import {wait} from '../src/wait'
-import * as process from 'process'
-import * as cp from 'child_process'
 import * as path from 'path'
-import {expect, test} from '@jest/globals'
+import * as os from 'os'
+import * as fs from 'fs/promises'
+import {expect, beforeEach, afterEach, test} from '@jest/globals'
+import mockFs from 'mock-fs'
 
-test('throws invalid number', async () => {
-  const input = parseInt('foo', 10)
-  await expect(wait(input)).rejects.toThrow('milliseconds not a number')
+import {createSession} from '../src/create-session'
+
+const homeDir = os.homedir()
+
+beforeEach(() => {
+  mockFs({
+    [path.join(homeDir, '.vtex')]: {}
+  })
 })
 
-test('wait 500 ms', async () => {
-  const start = new Date()
-  await wait(500)
-  const end = new Date()
-  var delta = Math.abs(end.getTime() - start.getTime())
-  expect(delta).toBeGreaterThan(450)
+afterEach(() => {
+  mockFs.restore()
+})
+
+test('creates tokens, session and workspace files', async () => {
+  await createSession('my-token', 'myaccount')
+
+  const tokens = JSON.parse(
+    (
+      await fs.readFile(path.join(homeDir, '.vtex', 'session', 'tokens.json'))
+    ).toString()
+  )
+
+  expect(tokens).toStrictEqual(
+    expect.objectContaining({
+      myaccount: 'my-token'
+    })
+  )
 })

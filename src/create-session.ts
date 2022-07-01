@@ -4,9 +4,8 @@ import {homedir} from 'os'
 import * as path from 'path'
 
 import * as io from '@actions/io'
-import fetch from 'node-fetch'
 
-const getAuthToken = async ({
+export const getAuthToken = async ({
   appkey,
   apptoken,
   account
@@ -19,6 +18,8 @@ const getAuthToken = async ({
     appkey,
     apptoken
   }
+
+  const fetch = await import('node-fetch').then(mod => mod.default)
 
   const res = await fetch(
     `http://api.vtexcommercestable.com.br/api/vtexid/apptoken/login?an=${encodeURIComponent(
@@ -36,21 +37,10 @@ const getAuthToken = async ({
   return result.token
 }
 
-export const createSession = async ({
-  appkey,
-  apptoken,
-  account
-}: {
-  appkey: string
-  apptoken: string
+export const createSession = async (
+  token: string,
   account: string
-}): Promise<string> => {
-  const token = await getAuthToken({
-    appkey,
-    apptoken,
-    account
-  })
-
+): Promise<void> => {
   const tokens = {
     [account]: token
   }
@@ -86,6 +76,4 @@ export const createSession = async ({
       JSON.stringify(workspace)
     )
   ])
-
-  return token
 }
