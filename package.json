@@ -30,7 +30,7 @@
   "devDependencies": {
     "@types/mock-fs": "^4.13.1",
     "@types/node": "^18.0.0",
-    "@typescript-eslint/parser": "^5.8.1",
+    "@typescript-eslint/parser": "^5.34.0",
     "@vercel/ncc": "^0.34.0",
     "@vtex/prettier-config": "^1.0.0",
     "eslint": "^8.18.0",
