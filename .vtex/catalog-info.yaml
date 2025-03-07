@@ -1,0 +1,19 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: action-toolbelt-login
+  description: Perform login operations with VTEX Toolbelt using an App Key and Token
+  tags:
+    - typescript
+  annotations:
+    vtex.com/janus-acronym: ""
+    vtex.com/o11y-os-index: ""
+    grafana/dashboard-selector: ""
+    github.com/project-slug: vtex/action-toolbelt-login
+    backstage.io/techdocs-ref: dir:../
+spec:
+  lifecycle: stable
+  owner: apps
+  type: gh-action
+  dependsOn:
+    - component:toolbelt
