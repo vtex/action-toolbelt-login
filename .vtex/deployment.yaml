@@ -1,0 +1,16 @@
+- name: action-toolbelt-login
+  build:
+    provider: dkcicd
+    pipelines:
+      - name: techdocs-v1
+        parameters:
+          entityReference: default/component/action-toolbelt-login
+          sourceDir: ./
+        when:
+          - event: push
+            source: branch
+            regex: main
+            path:
+              - "docs/**"
+              - README.md
+              - .vtex/deployment.yaml
