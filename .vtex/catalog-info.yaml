@@ -11,6 +11,7 @@ metadata:
     grafana/dashboard-selector: ""
     github.com/project-slug: vtex/action-toolbelt-login
     backstage.io/techdocs-ref: dir:../
+    vtex.com/application-id: VLXF6T5W
 spec:
   lifecycle: stable
   owner: apps
