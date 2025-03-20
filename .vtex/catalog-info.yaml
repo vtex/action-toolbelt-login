@@ -14,7 +14,7 @@ metadata:
     vtex.com/application-id: VLXF6T5W
 spec:
   lifecycle: stable
-  owner: apps
+  owner: te-0029
   type: gh-action
   dependsOn:
     - component:toolbelt
