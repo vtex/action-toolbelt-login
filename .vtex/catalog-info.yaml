@@ -12,6 +12,7 @@ metadata:
     github.com/project-slug: vtex/action-toolbelt-login
     backstage.io/techdocs-ref: dir:../
     vtex.com/application-id: VLXF6T5W
+    vtex.com/platform-flow-id: CommDev#1,Merch#3
 spec:
   lifecycle: stable
   owner: te-0029
