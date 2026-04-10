@@ -1,7 +1,22 @@
 - name: action-toolbelt-login
+  referenceId: PLACEHOLDER
   build:
     provider: dkcicd
     pipelines:
+      - name: node-ci-v2
+        parameters:
+          sonarProjectName: action-toolbelt-login
+          nodeVersion: 20-bookworm
+          nodeCommands:
+            - test -- --coverage
+        runtime:
+          architecture: amd64
+        when:
+          - event: pull_request
+            source: branch
+          - event: push
+            source: branch
+            regex: main
       - name: techdocs-v1
         parameters:
           entityReference: default/component/action-toolbelt-login
