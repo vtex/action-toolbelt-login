@@ -1,5 +1,5 @@
 - name: action-toolbelt-login
-  referenceId: PLACEHOLDER
+  referenceId: VLXF6T5W
   build:
     provider: dkcicd
     pipelines:
