@@ -9,6 +9,7 @@
     "lint": "eslint --ext ts .",
     "package": "ncc build --source-map --license licenses.txt",
     "test": "jest",
+    "ci": "yarn install --frozen-lockfile",
     "all": "run-s build lint package test"
   },
   "repository": {
